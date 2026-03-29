@@ -18,5 +18,14 @@
     <ClCompile Include="StructuraTelfon.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="VectoriDeElemente.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CitireDinFisierText.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ListaSimpluInlantuita.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
