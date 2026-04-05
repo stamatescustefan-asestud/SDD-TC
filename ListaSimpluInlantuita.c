@@ -57,7 +57,7 @@ void afisareListaMasini(Nod* cap) {
 	}
 }
 
-void adaugareMasiniInLista(Nod* *cap, Masina masinaNoua) {
+void adaugareMasiniInLista(Nod** cap, Masina masinaNoua) {
 	Nod* nou = (Nod*)malloc(sizeof(Nod));
 	nou->info = masinaNoua;
 	nou->next = NULL;
@@ -93,7 +93,7 @@ Nod* citireListaMasiniDinFisier(const char* numeFisier) {
 	return cap;
 }
 
-void dezalocareListaMasini(Nod* *cap) {
+void dezalocareListaMasini(Nod** cap) {
 	while (*cap) {
 		Nod* p = cap;
 		(*cap) = (*cap)->next;
@@ -107,8 +107,75 @@ void dezalocareListaMasini(Nod* *cap) {
 	}
 }
 
+float calculeazaPretMediu(Nod* cap) {
+	float suma = 0;
+	int contor = 0;
+	while (cap) {
+		suma += cap->info.pret;
+		contor++;
+		cap = cap->next;
+	}
+	if (contor > 0) {
+		return suma / contor;
+	}
+	return 0;
+}
+
+float calculeazaPretulMasinilorUnuiSofer(Nod* cap, const char* numeSofer) {
+	float suma = 0;
+	while (cap) {
+		if (strcmp(cap->info.numeSofer, numeSofer) == 0) {
+			suma += cap->info.pret;
+		}
+		cap = cap->next;
+	}
+	return suma;
+}
+
+void stergeMasiniDinSeria(Nod** cap, char serieCautata) {
+	while ((*cap) && (*cap)->info.serie == serieCautata) {
+		Nod* aux = *cap;
+		(*cap) = aux->next;
+		if (aux->info.numeSofer) {
+			free(aux->info.numeSofer);
+		}
+		if (aux->info.model) {
+			free(aux->info.model);
+		}
+		free(aux);
+	}
+	if ((*cap)) {
+		Nod* p = *cap;
+		while (p) {
+			while (p && p->next->info.serie != serieCautata) {
+				p = p->next;
+			}
+			if (p->next) {
+				Nod* aux = p->next;
+				p->next = aux->next;
+				if (aux->info.numeSofer) {
+					free(aux->info.numeSofer);
+				}
+				if (aux->info.model) {
+					free(aux->info.model);
+				}
+				free(aux);
+			}
+			else {
+				p = NULL;
+			}
+		}
+	}
+}
+
 int main() {
 	Nod* cap = citireListaMasiniDinFisier("masini.txt");
+	afisareListaMasini(cap);
+	printf("Pretul mediu este: %.2f\n", calculeazaPretMediu(cap));
+	printf("Pretul masinilor unui sofer este: %.2f", calculeazaPretulMasinilorUnuiSofer(cap, "Ionescu"));
+	stergeMasiniDinSeria(&cap, 'A');
+	afisareListaMasini(cap);
+	stergeMasiniDinSeria(&cap, 'B');
 	afisareListaMasini(cap);
 	dezalocareListaMasini(&cap);
 	return 0;
