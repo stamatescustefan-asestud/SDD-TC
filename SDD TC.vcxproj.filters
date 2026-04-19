@@ -27,5 +27,8 @@
     <ClCompile Include="ListaSimpluInlantuita.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ListaDubluInlantuite.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
