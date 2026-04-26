@@ -106,7 +106,60 @@ void adaugaLaInceputInLista(ListaDubla* lista, Masina masinaNoua) {
 	lista->nrNoduri++;
 }
 
-void* citireLDMasiniDinFisier(const char* numeFisier) {
+ListaDubla citireLDMasiniDinFisier(const char* numeFisier) {
 	FILE* f = fopen(numeFisier, "r");
+	ListaDubla lista;
+	lista.first = NULL;
+	lista.last = NULL;
+	lista.nrNoduri = 0;
+	while (!feof(f)) {
+		adaugaMasinaInLista(&lista, citireMasinaDinFisier(f));
+	}
+	fclose(f);
+	return lista;
+}
 
+void dezalocareMasini(ListaDubla* lista) {
+	Nod* p = lista->first;
+	while (p) {
+		Nod* aux = p;
+		p = p->next;
+		if (aux->masina.model) {
+			free(aux->masina.model);
+		}
+		if (aux->masina.numeSofer) {
+			free(aux->masina.numeSofer);
+		}
+		free(aux);
+	}
+	lista->first = NULL;
+	lista->last = NULL;
+	lista->nrNoduri = 0;
+}
+
+float calculeazaPretMediu(ListaDubla lista) {
+	if (lista.first) {
+		float suma = 0;
+		Nod* p = lista.first;
+		while (lista) {
+			suma += p->masina.pret;
+			p = p->next;
+		}
+		return suma / lista.nrNoduri;
+	}
+	return 0;
+}
+
+
+
+int main() {
+	ListaDubla lista = citireLDMasiniDinFisier("masini.txt");
+	afisareListaMasiniDeLaInceput(lista);
+	printf("-----------------\n\n\n\n\n");
+	afisareListaMasiniDeLaSfarsit(lista);
+
+	printf("\nPretul mediu: %.2f\n", calculeazaPretMediu(lista));
+
+	dezalocareMasini(&lista);
+	return 0;
 }
