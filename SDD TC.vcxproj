@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="CitireDinFisierText.c" />
     <ClCompile Include="HashTable.c" />
+    <ClCompile Include="Heap.c" />
     <ClCompile Include="ListaDubluInlantuite.c" />
     <ClCompile Include="ListaSimpluInlantuita.c" />
     <ClCompile Include="StructuraTelfon.c" />

@@ -33,5 +33,8 @@
     <ClCompile Include="HashTable.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Heap.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
